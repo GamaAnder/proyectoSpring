@@ -1,0 +1,40 @@
+package com.example.service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.example.entity.DetalleReservaAsientos;
+import com.example.repository.DetalleReservaAsientosRepository;
+
+@RestController
+@RequestMapping("/detalle")
+@CrossOrigin
+public class DetalleReservaAsientosService {
+
+	@Autowired
+	DetalleReservaAsientosRepository detalleRepository;
+
+	@GetMapping(path="/buscar")
+	public List<DetalleReservaAsientos> buscar(){
+		return detalleRepository.findAll();
+	}
+	
+	@PostMapping(path="/guardar")
+	public DetalleReservaAsientos guardar(@RequestBody DetalleReservaAsientos detalleReservaAsientos) {
+		return detalleRepository.save(detalleReservaAsientos);
+	}
+	
+	@DeleteMapping(path="/eliminar/{id_detalle}")
+	public void eliminar(@PathVariable int idDetalle) {
+		detalleRepository.deleteById(idDetalle);
+	}
+}
